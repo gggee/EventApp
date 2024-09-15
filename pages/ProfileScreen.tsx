@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, Button } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, SafeAreaView } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
 
 const appliedEvents = [
@@ -50,39 +51,47 @@ export default function ProfileScreen({ navigation }) {
   }, [isAuthenticated, navigation]);
 
   if (!isAuthenticated) {
-    return <View style={styles.container}><Text>Loading...</Text></View>;
+    return <SafeAreaView style={styles.container}><Text>Loading...</Text></SafeAreaView>;
   }
 
   const renderAppliedEvent = ({ item }) => (
     <View style={styles.card}>
       <Text style={styles.cardTitle}>{item.title}</Text>
-      <Text>Организация: {item.organization}</Text>
-      <Text>Дата: {item.date}</Text>
-      <Text>Тип: {item.type}</Text>
-      <Text>Статус: {item.status}</Text>
+      <Text style={styles.cardText}>Организация: {item.organization}</Text>
+      <Text style={styles.cardText}>Дата: {item.date}</Text>
+      <Text style={styles.cardText}>Тип: {item.type}</Text>
+      <Text style={styles.cardTextStatus}>Статус: {item.status}</Text>
     </View>
   );
 
   const renderVolunteerApplication = ({ item }) => (
     <View style={styles.card}>
       <Text style={styles.cardTitle}>{item.fullName}</Text>
-      <Text>Дата рождения: {item.bDay}</Text>
-      <Text>Доступное время: {item.availability}</Text>
-      <Text>Опыт: {item.experience || 'Не указано'}</Text>
-      <Text>Мероприятие: {item.event}</Text>
+      <Text style={styles.cardText}>Дата рождения: {item.bDay}</Text>
+      <Text style={styles.cardText}>Доступное время: {item.availability}</Text>
+      <Text style={styles.cardText}>Опыт: {item.experience || 'Не указано'}</Text>
+      <Text style={styles.cardTextStatus}>Мероприятие: {item.event}</Text>
     </View>
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {userProfile ? (
         <>
+          <View style={styles.profileContainer}>
+            <Ionicons name="person" size={70} color="#d4eaf7" style={styles.userIcon} />
+            <View style={styles.userInfo}>
+              <Text style={styles.userName}>
+                {userProfile.type === 'Volunteer' ? userProfile.fullName || 'Не указано' : userProfile.orgName || 'N/A'}
+              </Text>
+              <Text style={styles.userEmail}>{userProfile.email || 'Не указано'}</Text>
+              {userProfile.type === 'Volunteer' && (
+                <Text style={styles.userExperience}>Опыт: {userProfile.experience ? userProfile.experience : 'Не указано'}</Text>
+              )}
+            </View>
+          </View>
           {userProfile.type === 'Volunteer' ? (
             <>
-              <Text>ФИО: {userProfile.fullName || 'Не указано'}</Text>
-              <Text>Email: {userProfile.email || 'Не указано'}</Text>
-              <Text>Опыт: {userProfile.experience ? userProfile.experience : 'Не указано'}</Text>
-              
               <Text style={styles.sectionTitle}>Поданные заявки</Text>
               <FlatList
                 data={appliedEvents}
@@ -91,12 +100,8 @@ export default function ProfileScreen({ navigation }) {
                 contentContainerStyle={styles.scrollContainer}
               />
             </>
-          ) : userProfile.type === 'Organization' ? (
+          ) : (
             <>
-              <Text>Имя организации: {userProfile.orgName || 'N/A'}</Text>
-              <Text>Контактное лицо: {userProfile.contactPerson || 'N/A'}</Text>
-              <Text>Email: {userProfile.email || 'N/A'}</Text>
-            
               <Text style={styles.sectionTitle}>Заявки на рассмотрение</Text>
               <FlatList
                 data={volunteerApplications}
@@ -105,41 +110,123 @@ export default function ProfileScreen({ navigation }) {
                 contentContainerStyle={styles.scrollContainer}
               />
             </>
-          ) : (
-            <Text>Тип профиля пользователя не распознан</Text>
           )}
         </>
       ) : (
         <Text>Профиль пользователя недоступен</Text>
       )}
-
-      <Button title="Выход" onPress={signOut} />
-    </View>
+      <View style={styles.btnBlock}>
+        <TouchableOpacity style={styles.submitButton} onPress={signOut}>
+          <Text style={styles.submitButtonText}>Выход</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 10,
+    backgroundColor: '#F4F4F9',
+    textAlign: 'center'
+  },
+  profileContainer: {
+    flexDirection: 'col',
+    alignItems: 'center',
+    marginBottom: 20,
+    backgroundColor: '#113566',
+    margin: 20,
+    padding: 25,
+    borderRadius: 50,
+    height: '30%',
+    shadowColor: 'black',
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 10,
+    elevation: 3,
+  },
+  userIcon: {
+    textAlign: 'center',
+    paddingBottom: 3
+  },
+  userInfo: {
+    flex: 1,
+    alignItems: 'center',
+    color: 'white',
+  },
+  userName: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#333333',
+    marginBottom: 5,
+    color: 'white',
+    paddingBottom: 5
+  },
+  userEmail: {
+    fontSize: 16,
+    color: '#555555',
+    marginBottom: 5,
+    color: 'white'
+  },
+  userExperience: {
+    fontSize: 16,
+    color: '#555555',
+    color: 'white'
   },
   scrollContainer: {
     flexGrow: 1,
   },
   card: {
-    backgroundColor: '#f8f8f8',
-    padding: 15,
+    backgroundColor: '#FFFFFF',
+    padding: 20,
     marginVertical: 10,
-    borderRadius: 10,
-    elevation: 3,
+    borderRadius: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 4,
   },
   cardTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#333333',
+    marginBottom: 5,
+  },
+  cardText: {
+    fontSize: 16,
+    color: '#555555',
+    marginBottom: 5,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
-    marginVertical: 10,
+    color: '#3B3B98',
+    marginVertical: 15,
+    textAlign: 'center'
   },
+  submitButton: {
+    backgroundColor: '#113566',
+    paddingVertical: 14,
+    borderRadius: 25,
+    alignItems: 'center',
+    marginTop: 20,
+    width: '50%',
+  },
+  submitButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  btnBlock:{
+    alignItems:'center',
+    marginBottom:10
+  },
+  cardTextStatus:{
+    fontSize: 16,
+    color: '#555555',
+    marginBottom: 5,
+    fontWeight: 'bold'
+  }
 });

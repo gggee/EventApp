@@ -1,135 +1,145 @@
 import React, { Fragment } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { StyleSheet, Text, TextInput, Button, ScrollView } from "react-native";
+import { StyleSheet, Text, TextInput, Button, ScrollView, View } from "react-native";
 
 const EventTable = ({ onClose, onSubmit }) => {
   const { control, formState: { errors }, handleSubmit } = useForm({
     mode: "onBlur"
   });
 
-  // Handle form submission and pass the event data to parent
   const onSubmitHandler = (data) => {
-    onSubmit(data); // Pass event data to OrganizationPage
-    onClose(); // Close modal after submitting
+    onSubmit(data); 
+    onClose(); 
   };
 
   return (
     <Fragment>
       <ScrollView contentContainerStyle={styles.form}>
-        {/* Event Name Input */}
-        <Text>Название события</Text>
-        <Controller
-          control={control}
-          name="name"
-          rules={{ required: "Пожалуйста, введите название события!" }}
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              style={styles.input}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Введите название события"
-            />
-          )}
-        />
-        {errors.name && <Text style={styles.error}>{errors.name.message}</Text>}
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Название события</Text>
+          <Controller
+            control={control}
+            name="name"
+            rules={{ required: "Пожалуйста, введите название события!" }}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                style={styles.input}
+                onChangeText={onChange}
+                value={value}
+                placeholder="Введите название события"
+                placeholderTextColor="#888"
+              />
+            )}
+          />
+          {errors.name && <Text style={styles.error}>{errors.name.message}</Text>}
+        </View>
 
-        {/* Event Type Input */}
-        <Text>Тип события</Text>
-        <Controller
-          control={control}
-          name="type"
-          rules={{ required: "Пожалуйста, введите тип события!" }}
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              style={styles.input}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Введите тип события"
-            />
-          )}
-        />
-        {errors.type && <Text style={styles.error}>{errors.type.message}</Text>}
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Тип события</Text>
+          <Controller
+            control={control}
+            name="type"
+            rules={{ required: "Пожалуйста, введите тип события!" }}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                style={styles.input}
+                onChangeText={onChange}
+                value={value}
+                placeholder="Введите тип события"
+                placeholderTextColor="#888"
+              />
+            )}
+          />
+          {errors.type && <Text style={styles.error}>{errors.type.message}</Text>}
+        </View>
 
-        {/* Event Date Input */}
-        <Text>Дата события</Text>
-        <Controller
-          control={control}
-          name="date"
-          rules={{ required: "Пожалуйста, введите дату события!" }}
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              style={styles.input}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Введите дату события"
-              keyboardType="datetime"
-            />
-          )}
-        />
-        {errors.date && <Text style={styles.error}>{errors.date.message}</Text>}
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Дата события</Text>
+          <Controller
+            control={control}
+            name="date"
+            rules={{ required: "Пожалуйста, введите дату события!" }}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                style={styles.input}
+                onChangeText={onChange}
+                value={value}
+                placeholder="Введите дату события"
+                placeholderTextColor="#888"
+                keyboardType="default"
+              />
+            )}
+          />
+          {errors.date && <Text style={styles.error}>{errors.date.message}</Text>}
+        </View>
 
-        {/* Volunteer Experience Input */}
-        <Text>Волонтерский опыт</Text>
-        <Controller
-          control={control}
-          name="volunteerExperience"
-          rules={{ required: "Пожалуйста, введите опыт волонтера!" }}
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              style={[styles.input, styles.textarea]}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Введите опыт волонтера"
-              multiline={true}
-            />
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Волонтерский опыт</Text>
+          <Controller
+            control={control}
+            name="volunteerExperience"
+            rules={{ required: "Пожалуйста, введите опыт волонтера!" }}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                style={[styles.input, styles.textarea]}
+                onChangeText={onChange}
+                value={value}
+                placeholder="Введите опыт волонтера"
+                placeholderTextColor="#888"
+                multiline={true}
+              />
+            )}
+          />
+          {errors.volunteerExperience && (
+            <Text style={styles.error}>{errors.volunteerExperience.message}</Text>
           )}
-        />
-        {errors.volunteerExperience && (
-          <Text style={styles.error}>{errors.volunteerExperience.message}</Text>
-        )}
+        </View>
 
-        {/* Age Restriction Input */}
-        <Text>Возраст участия волонтера</Text>
-        <Controller
-          control={control}
-          name="agerestriction"
-          rules={{ required: "Пожалуйста, введите возраст волонтера!" }}
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              style={styles.input}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Введите возраст волонтера"
-              keyboardType="numeric"
-            />
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Возраст участия волонтера</Text>
+          <Controller
+            control={control}
+            name="ageRestriction"
+            rules={{ required: "Пожалуйста, введите возраст волонтера!" }}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                style={styles.input}
+                onChangeText={onChange}
+                value={value}
+                placeholder="Введите возраст волонтера"
+                placeholderTextColor="#888"
+                keyboardType="numeric"
+              />
+            )}
+          />
+          {errors.ageRestriction && (
+            <Text style={styles.error}>{errors.ageRestriction.message}</Text>
           )}
-        />
-        {errors.ageRestriction && (
-          <Text style={styles.error}>{errors.ageRestriction.message}</Text>
-        )}
+        </View>
 
-        {/* Event Description Input */}
-        <Text>Обзор события</Text>
-        <Controller
-          control={control}
-          name="description"
-          rules={{ required: "Пожалуйста, опишите событие!" }}
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              style={[styles.input, styles.textarea]}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Опишите событие"
-              multiline={true}
-            />
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Обзор события</Text>
+          <Controller
+            control={control}
+            name="description"
+            rules={{ required: "Пожалуйста, опишите событие!" }}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                style={[styles.input, styles.textarea]}
+                onChangeText={onChange}
+                value={value}
+                placeholder="Опишите событие"
+                placeholderTextColor="#888"
+                multiline={true}
+              />
+            )}
+          />
+          {errors.description && (
+            <Text style={styles.error}>{errors.description.message}</Text>
           )}
-        />
-        {errors.description && (
-          <Text style={styles.error}>{errors.description.message}</Text>
-        )}
+        </View>
 
-        {/* Submit Button */}
-        <Button title="Создать событие" onPress={handleSubmit(onSubmitHandler)} />
+        <Button title="Создать событие" onPress={handleSubmit(onSubmitHandler)} color="#00668C" />
       </ScrollView>
     </Fragment>
   );
@@ -137,24 +147,35 @@ const EventTable = ({ onClose, onSubmit }) => {
 
 const styles = StyleSheet.create({
   form: {
-    padding: 16,
-    flexGrow: 1
+    padding: 10,
+    flexGrow: 1,
+  },
+  inputGroup: {
+    marginBottom: 10,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#333', 
+    marginBottom: 8,
   },
   input: {
     width: "100%",
-    padding: 8,
-    marginVertical: 8,
-    borderColor: "#ccc",
+    padding: 12,
+    borderColor: "#DDDDDD", 
     borderWidth: 1,
-    borderRadius: 5
+    borderRadius: 12, 
+    backgroundColor: "#FFFFFF", 
+    fontSize: 12, 
   },
   textarea: {
-    height: 80
+    height: 100, 
+    textAlignVertical: 'top',
   },
   error: {
-    color: "red",
+    color: "#D32F2F", 
     fontSize: 12,
-    marginBottom: 8
+    marginTop: 4,
   }
 });
 

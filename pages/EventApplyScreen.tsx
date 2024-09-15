@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal, Button, TextInput, Alert, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal, Button, TextInput, Alert, SafeAreaView, Dimensions } from 'react-native';
 
 const initialEvents = [
   {
@@ -102,7 +102,7 @@ export default function EventApplyScreen({ navigation }) {
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <FlatList
         data={events}
         renderItem={renderEventCard}
@@ -125,8 +125,8 @@ export default function EventApplyScreen({ navigation }) {
               <Text>Время: {selectedEvent.time}</Text>
               <Text>Тип: {selectedEvent.type}</Text>
               <Text>Требования: {selectedEvent.requirements}</Text>
-              <Button title="Записаться" onPress={handleOpenTimeModal} />
-              <Button title="Закрыть" onPress={handleCloseModal} />
+              <Button title="Записаться" onPress={handleOpenTimeModal} color="#3B3B98" />
+              <Button title="Закрыть" onPress={handleCloseModal} color="#3B3B98" />
             </View>
           </View>
         </Modal>
@@ -168,13 +168,13 @@ export default function EventApplyScreen({ navigation }) {
                   onChangeText={setCustomTime}
                 />
               )}
-              <Button title="Отправить" onPress={handleSubmit} />
-              <Button title="Закрыть" onPress={handleCloseTimeModal} />
+              <Button title="Отправить" onPress={handleSubmit} color="#3B3B98" />
+              <Button title="Закрыть" onPress={handleCloseTimeModal} color="#3B3B98" />
             </View>
           </View>
         </Modal>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -182,63 +182,82 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    backgroundColor: '#f4f4f4', 
   },
   scrollContainer: {
     flexGrow: 1,
   },
   card: {
-    backgroundColor: '#f8f8f8',
-    padding: 15,
+    backgroundColor: '#ffffff',
+    padding: 20,
     marginVertical: 10,
-    borderRadius: 10,
-    elevation: 3,
+    borderRadius: 15,
+    elevation: 6, 
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 }, 
+    shadowOpacity: 0.2, 
+    shadowRadius: 10, 
   },
   cardTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#333', 
+    fontFamily: 'Roboto-Regular', 
   },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
   },
   modalContent: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    width: '80%',
+    backgroundColor: '#ffffff',
+    padding: 30,
+    borderRadius: 20, 
+    width: '90%', 
     maxHeight: Dimensions.get('window').height * 0.8,
+    elevation: 10, 
+    shadowColor: '#000', 
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.3, 
+    shadowRadius: 15, 
   },
   modalTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 10,
+    color: '#333', 
+    marginBottom: 15,
+    fontFamily: 'Roboto-Regular', 
   },
   label: {
-    fontSize: 16,
-    marginBottom: 10,
+    fontSize: 18,
+    color: '#333', 
+    marginBottom: 15,
+    fontFamily: 'Roboto-Regular', 
   },
   timeButton: {
-    backgroundColor: '#86C232',
+    backgroundColor: '#86C232', 
     padding: 15,
-    marginBottom: 10,
-    borderRadius: 5,
+    marginBottom: 12,
+    borderRadius: 10, 
   },
   selectedButton: {
-    backgroundColor: 'green',
+    backgroundColor: '#4CAF50', 
   },
   buttonText: {
-    color: 'white',
+    color: '#ffffff', 
     fontSize: 16,
     textAlign: 'center',
+    fontFamily: 'Roboto-Regular',
   },
   input: {
     borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
+    borderColor: '#ddd', 
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 15,
     width: '100%',
+    backgroundColor: '#f9f9f9', 
+    fontFamily: 'Roboto-Regular', 
   },
 });

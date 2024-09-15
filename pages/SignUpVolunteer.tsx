@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Alert, ScrollView, StyleSheet, KeyboardAvoidingView, Platform, Text } from 'react-native';
+import { View, TextInput, Button, Alert, ScrollView, StyleSheet, KeyboardAvoidingView, Platform, Text, TouchableOpacity } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 
 export default function SignUpVolunteerScreen({ navigation }) {
@@ -98,17 +98,23 @@ export default function SignUpVolunteerScreen({ navigation }) {
           secureTextEntry
         />
         <Text style={styles.label}>Есть ли у вас опыт в волонтерстве?</Text>
-        <Button
-          title="Да"
-          onPress={() => setExperience('Yes')}
-          color={experience === 'Yes' ? 'green' : 'gray'}
-        />
-        <Button
-          title="Нет"
-          onPress={() => setExperience('No')}
-          color={experience === 'No' ? 'green' : 'gray'}
-        />
-        <Button title="Зарегистрироваться" onPress={handleSubmit} />
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={[styles.experienceButton, experience === 'Yes' && styles.activeButton]}
+            onPress={() => setExperience('Yes')}
+          >
+            <Text style={styles.buttonText}>Да</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.experienceButton, experience === 'No' && styles.activeButton]}
+            onPress={() => setExperience('No')}
+          >
+            <Text style={styles.buttonText}>Нет</Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+          <Text style={styles.submitButtonText}>Зарегистрироваться</Text>
+        </TouchableOpacity>
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -122,16 +128,58 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     padding: 20,
+    backgroundColor: '#f0f8ff',
   },
   input: {
-    height: 40,
-    borderColor: 'gray',
+    height: 50,
+    borderColor: '#00668c',
     borderWidth: 1,
     marginBottom: 15,
-    paddingLeft: 8,
+    paddingLeft: 10,
+    borderRadius: 8,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 3,
   },
   label: {
     fontSize: 16,
     marginBottom: 10,
+    color: '#333',
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  experienceButton: {
+    flex: 1,
+    paddingVertical: 10,
+    backgroundColor: '#cccccc',
+    borderRadius: 25,
+    marginHorizontal: 10,
+    alignItems: 'center',
+  },
+  activeButton: {
+    backgroundColor: '#00668c',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  submitButton: {
+    backgroundColor: '#00668c',
+    paddingVertical: 15,
+    borderRadius: 25,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  submitButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });

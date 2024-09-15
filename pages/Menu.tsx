@@ -21,17 +21,17 @@ export default function Menu() {
   return (
     <View style={styles.topMenu}>
       <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Home')}>
-        <Ionicons name="home" size={24} color="#333" />
+        <Ionicons name="home" size={24} color="#d4eaf7" />
       </TouchableOpacity>
 
       {userProfile ? (
         <TouchableOpacity style={styles.menuItem} onPress={handlePress}>
-          <Ionicons name="search" size={24} color="#333" />
+          <Ionicons name="search" size={24} color="#d4eaf7" />
         </TouchableOpacity>
       ) : null}
 
       <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Profile')}>
-        <Ionicons name="person" size={24} color="#333" />
+        <Ionicons name="person" size={24} color="#d4eaf7" />
       </TouchableOpacity>
     </View>
   );
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingVertical: 10,
-    backgroundColor: '#a9a59c',
+    backgroundColor: '#00668c', 
   },
   menuItem: {
     flexDirection: 'row',

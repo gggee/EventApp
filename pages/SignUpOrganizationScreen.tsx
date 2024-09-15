@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Alert, StyleSheet, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, TextInput, Button, Alert, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity, Text } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 
 export default function SignUpOrganizationScreen({ navigation }) {
@@ -97,7 +97,9 @@ export default function SignUpOrganizationScreen({ navigation }) {
           onChangeText={setPassword}
           secureTextEntry
         />
-        <Button title="Зарегистрироваться" onPress={handleSubmit} color="#00668C" />
+        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+          <Text style={styles.submitButtonText}>Зарегистрироваться</Text>
+        </TouchableOpacity>
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -106,7 +108,7 @@ export default function SignUpOrganizationScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#D4EAF7', 
+    backgroundColor: '#F7F9FC', 
   },
   scrollContainer: {
     flexGrow: 1,
@@ -114,24 +116,29 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   input: {
-    height: 45,
-    borderColor: '#3498DB', 
-    borderWidth: 2,
-    borderRadius: 10, 
+    height: 50,
+    borderColor: '#00668c',
+    borderWidth: 1,
     marginBottom: 15,
-    paddingLeft: 15,
-    backgroundColor: '#FFFFFF', 
-    fontSize: 16,
-    color: '#2E2E2E', 
+    paddingLeft: 10,
+    borderRadius: 8,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 3,
   },
-  button: {
-    backgroundColor: '#00668C', 
-    borderRadius: 10, 
-    padding: 10,
+  submitButton: {
+    backgroundColor: '#00668c',
+    paddingVertical: 15,
+    borderRadius: 25,
+    alignItems: 'center',
+    marginTop: 20,
   },
-  buttonText: {
-    color: '#FFFFFF',
+  submitButtonText: {
+    color: '#fff',
     fontSize: 18,
-    textAlign: 'center',
+    fontWeight: 'bold',
   },
 });
